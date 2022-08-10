@@ -1,0 +1,6 @@
+# db backup volume dir
+.db_data/
+
+# backend
+**/*/tmp
+backend/.env

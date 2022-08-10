@@ -1,0 +1,33 @@
+version: '3.7'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    command: air 
+    volumes:
+      - ./backend:/app
+    ports:
+      - ${BACKEND_PORT}:${BACKEND_PORT}
+  
+  db:
+    image: postgres:14
+    ports:
+      - 5432:5432
+    volumes:
+      - psql_data_volume:/var/lib/postgresql/data/
+      - ./.db_data/:/data/
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+
+  adminer:
+    image: adminer
+    restart: unless-stopped
+    ports:
+      - 8080:8080
+    
+volumes:
+  psql_data_volume:
