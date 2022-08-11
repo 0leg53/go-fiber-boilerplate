@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"strconv"
 	"time"
 
@@ -22,15 +21,11 @@ var JwtCookieName = "session"
 func Register(c *fiber.Ctx) error {
 	var user models.User
 
-	// Parsing the data that has been entered by User
 	if err := c.BodyParser(&user); err != nil {
-		fmt.Println("aaa", err)
 		return err
 	}
 
-	// Bcrypting the password
 	password, _ := helpers.HashPassword(user.Password)
-	fmt.Println("aaa", password)
 
 	newUser := models.User{
 		Name:     user.Name,
